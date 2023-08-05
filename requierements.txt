@@ -4,8 +4,7 @@ llama_index
 langchain.embeddings.huggingface
 PyPDF2
 torch
-langchain.llms.base
+langchain
 transformers
-typing
-langchain.callbacks.manager
-json
+
+
