@@ -1,11 +1,11 @@
 import streamlit as st
 import anthropic
 
-with st.sidebar:
-    anthropic_api_key = st.text_input("Anthropic API Key", key="file_qa_api_key", type="password")
+
+anthropic_api_key = st.text_input("Anthropic API Key", key="file_qa_api_key", type="password")
 
 st.title("📝 File Q&A with Anthropic")
-uploaded_file = st.file_uploader("Upload an article", type=("pdf", "md"))
+uploaded_file = st.file_uploader("Upload an article", type=("pdf"))
 question = st.text_input(
     "Ask something about the article",
     placeholder="Can you give me a short summary?",
