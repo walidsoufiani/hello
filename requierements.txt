@@ -1,5 +1,5 @@
 streamlit
-streamlit-ace==0.1.1
+streamlit_ace==0.1.1
 llama_index
 langchain.embeddings.huggingface
 PyPDF2
