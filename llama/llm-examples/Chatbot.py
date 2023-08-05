@@ -7,7 +7,7 @@ anthropic_api_key = st.text_input("Anthropic API Key", key="file_qa_api_key", ty
 st.title("📝 File Q&A with Anthropic")
 uploaded_file = st.file_uploader("Upload an article", type=("pdf"))
 question = st.text_input(
-    "Ask something about the article",
+    "Ask something about the PDF",
     placeholder="",
     disabled=not uploaded_file,
 )
