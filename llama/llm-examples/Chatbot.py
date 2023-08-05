@@ -1,26 +1,33 @@
-import openai
 import streamlit as st
+import anthropic
 
 with st.sidebar:
-    openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
-    "[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
+    anthropic_api_key = st.text_input("Anthropic API Key", key="file_qa_api_key", type="password")
+    "[View the source code](https://github.com/streamlit/llm-examples/blob/main/pages/1_File_Q%26A.py)"
+    "[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/streamlit/llm-examples?quickstart=1)"
 
-st.title("💬 Chatbot")
-if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+st.title("📝 File Q&A with Anthropic")
+uploaded_file = st.file_uploader("Upload an article", type=("txt", "md"))
+question = st.text_input(
+    "Ask something about the article",
+    placeholder="Can you give me a short summary?",
+    disabled=not uploaded_file,
+)
 
-for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg["content"])
+if uploaded_file and question and not anthropic_api_key:
+    st.info("Please add your Anthropic API key to continue.")
 
-if prompt := st.chat_input():
-    if not openai_api_key:
-        st.info("Please add your OpenAI API key to continue.")
-        st.stop()
+if uploaded_file and question and anthropic_api_key:
+    article = uploaded_file.read().decode()
+    prompt = f"""{anthropic.HUMAN_PROMPT} Here's an article:\n\n<article>
+    {article}\n\n</article>\n\n{question}{anthropic.AI_PROMPT}"""
 
-    openai.api_key = openai_api_key
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    st.chat_message("user").write(prompt)
-    response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
-    msg = response.choices[0].message
-    st.session_state.messages.append(msg)
-    st.chat_message("assistant").write(msg.content)
+    client = anthropic.Client(api_key=anthropic_api_key)
+    response = client.completions.create(
+        prompt=prompt,
+        stop_sequences=[anthropic.HUMAN_PROMPT],
+        model="claude-v1", #"claude-2" for Claude 2 model
+        max_tokens_to_sample=100,
+    )
+    st.write("### Answer")
+    st.write(response.completion)
