@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_ace import st_ace, KEYBINDINGS, LANGUAGES, THEMES
+from streamlit_ace import KEYBINDINGS, LANGUAGES, THEMES
 from llama_index import SimpleDirectoryReader, LangchainEmbedding, GPTListIndex,VectorStoreIndex, PromptHelper
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from llama_index import LLMPredictor, ServiceContext
@@ -11,6 +11,13 @@ from typing import Mapping, Optional, Any, List
 from langchain.callbacks.manager import CallbackManagerForLLMRun
 import json
 
+from streamlit_ace import st_ace
+
+# Spawn a new Ace editor
+content = st_ace()
+
+# Display editor's content as you type
+content
 
 
 class CustomLLM(LLM):
