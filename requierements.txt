@@ -1,6 +1,6 @@
 streamlit
-streamlit_ace
 streamlit-ace
+streamlit_ace
 llama_index
 PyPDF2
 torch
