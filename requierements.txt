@@ -1,7 +1,7 @@
 streamlit
 streamlit_ace==0.1.1
+streamlit-ace
 llama_index
-langchain.embeddings.huggingface
 PyPDF2
 torch
 langchain
