@@ -1,5 +1,5 @@
 streamlit==1.25.0
-llama-index==0.7.19
+llama-index
 PyPDF2
 torch
 langchain==0.0.252
